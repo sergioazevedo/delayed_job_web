@@ -100,13 +100,13 @@ class DelayedJobWeb < Sinatra::Base
   def delayed_job_sql(type)
     case type
     when :enqueued
-      ''
+      {type: nil}
     when :working
-      'locked_at is not null'
+      {locked_at: {'$ne' => nil} }
     when :failed
-      'last_error is not null'
+      {last_error: {'$ne' => nil} }
     when :pending
-      'attempts = 0'
+      {attempts: 0}
     end
   end
 
